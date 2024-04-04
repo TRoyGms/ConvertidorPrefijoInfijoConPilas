@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertidor Infija-Prefija</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Convertidor Infija - Prefija</h1>
+        <div class="toggle-container">
+            <p id="text">Cambia de modo:</p>
+            <button id="toggleButton">Convertir a Prefija</button>
+        </div>
+        <div class="input-container">
+            <input type="text" id="expressionInput" placeholder="Ingrese una operacion">
+            <button id="convertButton">Convertir</button>
+        </div>
+        <div class="output-container">
+            <label for="result">Resultado:</label>
+            <input type="text" id="result" readonly>
+        </div>
+        
+    </div>
+    <script src="./src/index.js" type="module"></script>
+</body>
+</html>
