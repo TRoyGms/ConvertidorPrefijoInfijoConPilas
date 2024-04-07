@@ -1,28 +1,43 @@
-import { convertInfixToPrefix, convertPrefixToInfix } from './converters.js';
+import { Stack } from './model.js';
+import { displayPrefix } from './view.js';
 
-export class Controller {
-    constructor(model, view) {
-        this.model = model;
-        this.view = view;
-        this.isInfix = true; // Inicialmente estamos en notación infija
-    }
+function infixToPrefix(infix) {
+    let operators = "+-*/";
+    let precedence = {"+": 1, "-": 1, "*": 2, "/": 2};
+    let stack = new Stack();
+    let prefix = "";
+    infix = infix.split("").reverse().join("");
 
-    convert() {
-        const expression = this.view.getInput();
-        this.model.setExpression(expression);
-        let result;
-        if (this.isInfix) {
-            result = convertInfixToPrefix(expression);
+    for (let i = 0; i < infix.length; i++) {
+        let token = infix[i];
+        if (operators.includes(token)) {
+            while (!stack.isEmpty() && precedence[stack.top.data] >= precedence[token]) {
+                prefix += stack.pop().data;
+            }
+            stack.push(token);
+        } else if (token === ')') {
+            stack.push(token);
+        } else if (token === '(') {
+            while (stack.top.data !== ')') {
+                prefix += stack.pop().data;
+            }
+            stack.pop(); // Pop '('
         } else {
-            result = convertPrefixToInfix(expression);
+            prefix += token;
         }
-        this.view.setOutput(result);
-        this.view.clearInput();
     }
 
-    toggleNotation() {
-        this.isInfix = !this.isInfix;
-        const button = document.getElementById('toggleButton');
-        button.textContent = this.isInfix ? 'Convertir a Prefija' : 'Convertir a Infija';
+    while (!stack.isEmpty()) {
+        prefix += stack.pop().data;
     }
+
+    return prefix.split("").reverse().join("");
 }
+
+function convert() {
+    let infixExpression = document.getElementById("inputExpression").value.trim();
+    let prefixExpression = infixToPrefix(infixExpression);
+    displayPrefix(prefixExpression);
+}
+
+export { infixToPrefix, convert };

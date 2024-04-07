@@ -1,9 +1,4 @@
-class Node {
-    constructor(data) {
-        this.data = data;
-        this.next = null;
-    }
-}
+import { Node } from './node.js';
 
 class Stack {
     constructor() {
