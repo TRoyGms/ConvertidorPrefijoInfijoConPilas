@@ -31,4 +31,4 @@ class Stack {
     }
 }
 
-export { Stack };
+export { Stack, Node };
